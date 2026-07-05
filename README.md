@@ -54,15 +54,6 @@ USER QUERY
 
 Each specialist agent uses **dense retrieval (FAISS, BGE-small embeddings) + sparse retrieval (BM25) fused with Reciprocal Rank Fusion, then reranked with a cross-encoder** — the Text Agent additionally expands the query with HyDE (Hypothetical Document Embeddings) before the dense pass, and the Table Agent adds a post-rerank numeric/percentage-pattern boost.
 
-## Bug fixes already applied (carried into this repo)
-
-The original notebook's Critic agent had two real bugs, both fixed here (see `src/agents/critic.py`):
-
-1. **State mutation bug** — the refine loop originally overwrote `state.query` with the critic's search hint, permanently corrupting the "original user query" for the rest of the pipeline (including logging and evaluation). Fixed by refining only `state.rewritten_query` and restoring it afterward.
-2. **Lost-best-answer bug** — if a REFINE iteration produced a *worse* answer (e.g. "not found in context"), the original code would still overwrite the good answer from the first pass. Fixed by tracking `best_answer` across iterations and only upgrading it when the new answer is actually better.
-
-The Router was also constrained so it can only select agents from the Planner's own candidate list — the LLM router can narrow the Planner's choice but can't hallucinate a call to an agent the Planner never considered relevant.
-
 ## Evaluation results
 
 Ran on 3 held-out queries against the BAF (financial QA) sample dataset, scored by LLM-as-judge on Faithfulness / Answer Relevancy / Context Precision / Completeness (no ground-truth labels used):
@@ -156,7 +147,7 @@ eval_df = print_eval_report(results)
 
 ## Tech stack
 
-LangChain (`langchain-groq`) · Groq (Llama 3.1 8B Instant) · sentence-transformers (BGE-small embeddings, MS MARCO MiniLM cross-encoder reranker) · FAISS · BM25 (rank_bm25) · pandas
+LangChain (`langchain-groq`) · Groq (Llama 3.1 8B Instant) · sentence-transformers (BGE-small embeddings, cross-encoder reranker) · FAISS · BM25 (rank_bm25) · pandas
 
 ## Future work
 
