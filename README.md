@@ -6,14 +6,6 @@ A multi-agent Retrieval-Augmented Generation system for answering questions over
 
 ---
 
-## ⚠️ Before you push this to GitHub
-
-The original notebook had a **hardcoded Groq API key** in the LLM setup cell. That key is now redacted from everything in this repo (config is loaded from an environment variable / `.env` file instead — see `.env.example`), but:
-
-1. **Rotate/revoke that key in your Groq console immediately** if you haven't already — treat it as compromised, since it was pasted in plaintext.
-2. Double-check your original notebook (and anywhere else you may have saved it) before uploading anything else publicly.
-3. Never commit a `.env` file — it's already in `.gitignore` here.
-
 ## Architecture
 
 ```
