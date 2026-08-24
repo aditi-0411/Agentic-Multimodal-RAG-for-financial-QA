@@ -1,6 +1,6 @@
 # Agentic RAG for Financial Question Answering
 
-A multi-agent Retrieval-Augmented Generation system for answering questions over financial reports — built as a ReAct-style pipeline of specialist agents (Text / Table / Metadata) coordinated by a Planner, Router, Critic, and Synthesizer, with an LLM-as-judge evaluation layer scoring every answer on four RAGAS-style metrics.
+A smart multi-agent Retrieval-Augmented Generation system for answering questions over financial reports — built as a ReAct-style pipeline of specialist agents (Text / Table / Metadata) coordinated by a Planner, Router, Critic, and Synthesizer, with an LLM-as-judge evaluation layer scoring every answer on four RAGAS-style metrics.
 
 > The interesting part isn't "RAG over PDFs" — it's the multi-agent control flow: a Planner that classifies and rewrites the query, a Router that can override the Planner's agent selection, a Critic that can trigger a bounded re-retrieval loop without ever discarding a good answer, and an evaluation layer that scores itself with no ground-truth labels.
 
@@ -56,7 +56,7 @@ Each specialist agent uses **dense retrieval (FAISS, BGE-small embeddings) + spa
 
 ## Evaluation results
 
-Ran on 3 held-out queries against the BAF (financial QA) sample dataset, scored by LLM-as-judge on Faithfulness / Answer Relevancy / Context Precision / Completeness (no ground-truth labels used):
+Ran on a set of held-out queries against the BAF (financial QA) sample dataset, scored by LLM-as-judge on Faithfulness / Answer Relevancy / Context Precision / Completeness (no ground-truth labels used):
 
 | Query | Type | Agents Used | Iterations | Faithfulness | Relevancy | Ctx. Precision | Completeness | Overall |
 |---|---|---|:--:|:--:|:--:|:--:|:--:|:--:|
